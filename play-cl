@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import getpass
+
+def main():
+	"""
+	Entry point of the script.
+	"""
+
+	username = None
+	while username == None or username == '':
+		username = raw_input('Google Email: ')
+
+	password = None
+	while password == None or password == '':
+		password = getpass.getpass('Google Password: ')
+
+if __name__ == '__main__':
+	main()
+
