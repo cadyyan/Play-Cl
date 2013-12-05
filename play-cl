@@ -17,7 +17,13 @@ def main():
 	while password == None or password == '':
 		password = getpass.getpass('Google Password: ')
 
+	print 'Attempting to log in to Google Play...'
 	play_client = playcl.client.GooglePlayClient(email, password)
+	print 'Login successful!'
+
+	print 'Updating music library...'
+	play_client.update_local_music_lib()
+	print 'Library updated!'
 
 if __name__ == '__main__':
 	main()
