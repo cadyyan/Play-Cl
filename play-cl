@@ -2,18 +2,22 @@
 
 import getpass
 
+import playcl.client
+
 def main():
 	"""
 	Entry point of the script.
 	"""
 
-	username = None
-	while username == None or username == '':
-		username = raw_input('Google Email: ')
+	email = None
+	while email == None or email == '':
+		email = raw_input('Google Email: ')
 
 	password = None
 	while password == None or password == '':
 		password = getpass.getpass('Google Password: ')
+
+	play_client = playcl.client.GooglePlayClient(email, password)
 
 if __name__ == '__main__':
 	main()
