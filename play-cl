@@ -2,6 +2,7 @@
 
 import getpass
 
+import playcl.app
 import playcl.client
 
 def main():
@@ -9,21 +10,8 @@ def main():
 	Entry point of the script.
 	"""
 
-	email = None
-	while email == None or email == '':
-		email = raw_input('Google Email: ')
-
-	password = None
-	while password == None or password == '':
-		password = getpass.getpass('Google Password: ')
-
-	print 'Attempting to log in to Google Play...'
-	play_client = playcl.client.GooglePlayClient(email, password)
-	print 'Login successful!'
-
-	print 'Updating music library...'
-	play_client.update_local_music_lib()
-	print 'Library updated!'
+	app = playcl.app.PlayClApp()
+	app.run()
 
 if __name__ == '__main__':
 	main()

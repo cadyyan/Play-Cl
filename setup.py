@@ -12,7 +12,8 @@ setup(
 	license			 = 'MIT',
 	packages		 = find_packages(),
 	install_requires = [
-		'gmusicapi'
+		'gmusicapi',
+		'npyscreen',
 	],
 )
 
