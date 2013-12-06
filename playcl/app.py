@@ -74,3 +74,5 @@ class LoginForm(npyscreen.ActionForm):
 		Called when the cancel button is clicked.
 		"""
 
+		self.parentApp.switchForm(None)
+
