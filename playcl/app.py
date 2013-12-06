@@ -4,10 +4,21 @@ Describes the actual application itself.
 
 import npyscreen
 
+import playcl.client
+
 class PlayClApp(npyscreen.NPSAppManaged):
 	"""
 	Application class.
 	"""
+
+	def __init__(self):
+		"""
+		Construct the application.
+		"""
+
+		super(PlayClApp, self).__init__()
+
+		self.play_client = None
 
 	def main(self):
 		"""
@@ -23,7 +34,7 @@ class PlayClApp(npyscreen.NPSAppManaged):
 		Called on application startup.
 		"""
 
-		#self.registerForm('player', PlayerForm())
+		self.registerForm('player', PlayerForm())
 		self.registerForm('MAIN', LoginForm())
 
 		npyscreen.setTheme(npyscreen.Themes.TransparentThemeDarkText)
@@ -61,13 +72,22 @@ class LoginForm(npyscreen.ActionForm):
 
 		super(LoginForm, self).create()
 
-		self.add(npyscreen.TitleText, name = 'Google Email: ', use_two_lines = False)
-		self.add(npyscreen.TitlePassword, name = 'Google Password: ', use_two_lines = False)
+		self.add(npyscreen.TitleText, w_id = 'email',
+				 name = 'Google Email: ', use_two_lines = False)
+		self.add(npyscreen.TitlePassword, w_id = 'password',
+				 name = 'Google Password: ', use_two_lines = False)
 
 	def on_ok(self):
 		"""
 		Called when the OK button is clicked.
 		"""
+
+		email    = self.get_widget('email').value
+		password = self.get_widget('password').value
+
+		self.parentApp.play_client = playcl.client.GooglePlayClient(email, password)
+
+		self.parentApp.switchForm('player')
 
 	def on_cancel(self):
 		"""
