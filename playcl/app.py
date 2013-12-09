@@ -66,7 +66,7 @@ class PlayerForm(npyscreen.FormMutt):
 
 		super(PlayerForm, self).display()
 
-		self.play_client.update_local_music_lib()
+		self.parentApp.play_client.update_local_music_lib()
 
 class LoginForm(npyscreen.ActionForm):
 	"""
