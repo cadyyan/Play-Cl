@@ -19,7 +19,7 @@ class GooglePlayClient(object):
 		if not playcl.util.EMAIL_REGEX.match(email):
 			raise ValueError('Username is not a valid email')
 
-		self.play_api = gmusicapi.Webclient()
+		self.play_api = gmusicapi.Mobileclient()
 
 		if not self.play_api.login(email, password):
 			raise RuntimeError('Unable to log in to Google Play. Invalid username or password?')
@@ -28,8 +28,11 @@ class GooglePlayClient(object):
 		self.playlists     = {}
 
 	def __del__(self):
-		print 'Logging out of Google Play...'
-		self.play_api.logout()
+		"""
+		Makes sure to exit the client properly just in case...
+		"""
+
+		self.logout()
 
 	def update_local_music_lib(self):
 		"""
@@ -65,4 +68,11 @@ class GooglePlayClient(object):
 		playlists = self.play_api.get_all_playlist_ids().values()
 		for playlist in playlists:
 			self.playlists[playlist] = self.play_api.get_playlist_songs(playlist)
+
+	def logout(self):
+		"""
+		Logs the client out.
+		"""
+
+		self.play_api.logout()
 

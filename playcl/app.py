@@ -37,7 +37,13 @@ class PlayClApp(npyscreen.NPSAppManaged):
 		self.registerForm('player', PlayerForm())
 		self.registerForm('MAIN', LoginForm())
 
-		npyscreen.setTheme(npyscreen.Themes.TransparentThemeDarkText)
+	def onCleanExit(self):
+		"""
+		Called on exit of application.
+		"""
+
+		if self.play_client:
+			self.play_client.logout()
 
 class PlayerForm(npyscreen.FormMutt):
 	"""
@@ -50,15 +56,17 @@ class PlayerForm(npyscreen.FormMutt):
 		"""
 
 		super(PlayerForm, self).create()
-		self.how_exited_handers[npyscreen.wgwidget.EXITED_ESCAPE] = self.exit_application
 
-	def exit_application(self):
+		# TODO: setup widgets
+
+	def display(self):
 		"""
-		Quit the application.
+		Called to display the form.
 		"""
 
-		self.parentApp.NEXT_ACTIVE_FORM = None
-		self.editing = False
+		super(PlayerForm, self).display()
+
+		npyscreen.notify('Updating library...', title = "Updating")
 
 class LoginForm(npyscreen.ActionForm):
 	"""
