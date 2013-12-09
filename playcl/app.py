@@ -66,7 +66,7 @@ class PlayerForm(npyscreen.FormMutt):
 
 		super(PlayerForm, self).display()
 
-		npyscreen.notify('Updating library...', title = "Updating")
+		self.play_client.update_local_music_lib()
 
 class LoginForm(npyscreen.ActionForm):
 	"""
