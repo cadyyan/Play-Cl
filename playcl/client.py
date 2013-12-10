@@ -24,6 +24,7 @@ class GooglePlayClient(object):
 		if not self.play_api.login(email, password):
 			raise RuntimeError('Unable to log in to Google Play. Invalid username or password?')
 
+		self.email         = email
 		self.music_library = {}
 		self.playlists     = {}
 
@@ -65,9 +66,9 @@ class GooglePlayClient(object):
 
 			album_tracks.append(song)
 
-		playlists = self.play_api.get_all_playlist_ids().values()
+		playlists = self.play_api.get_all_user_playlist_contents()
 		for playlist in playlists:
-			self.playlists[playlist] = self.play_api.get_playlist_songs(playlist)
+			self.playlists[playlist['name']] = playlist['tracks']
 
 	def logout(self):
 		"""

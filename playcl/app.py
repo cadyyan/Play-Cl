@@ -50,6 +50,8 @@ class PlayerForm(npyscreen.FormMutt):
 	The main form of the application and the player.
 	"""
 
+	STATUS_BASE = 'Google Play - {0}'
+
 	def create(self):
 		"""
 		Called on from creation.
@@ -57,16 +59,19 @@ class PlayerForm(npyscreen.FormMutt):
 
 		super(PlayerForm, self).create()
 
-		# TODO: setup widgets
+		self.play_client    = None
+		self.wStatus1.value = PlayerForm.STATUS_BASE.format('Updating library...')
 
 	def display(self):
 		"""
 		Called to display the form.
 		"""
 
-		super(PlayerForm, self).display()
+		self.play_client = self.parentApp.play_client
 
-		self.parentApp.play_client.update_local_music_lib()
+		self.wStatus1.value = PlayerForm.STATUS_BASE.format(self.play_client.email)
+
+		super(PlayerForm, self).display()
 
 class LoginForm(npyscreen.ActionForm):
 	"""
@@ -96,6 +101,10 @@ class LoginForm(npyscreen.ActionForm):
 		self.parentApp.play_client = playcl.client.GooglePlayClient(email, password)
 
 		self.parentApp.switchForm('player')
+
+		# Trigger the update of the library.
+		# TODO: make this asynchronous
+		self.parentApp.play_client.update_local_music_lib()
 
 	def on_cancel(self):
 		"""
